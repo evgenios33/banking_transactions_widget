@@ -10,9 +10,9 @@ def filter_by_state(list_of_dict: list, state_value: str = "EXECUTED") -> list:
     return filter_list
 
 
-def sort_by_date(list_of_dict: list, sorting_direction: str = "True") -> list:
+def sort_by_date(list_of_dict: list, sorting_direction: bool = True) -> list:
     """Возвращает новый список отсортированный по ключу "date"."""
-    if sorting_direction.title() == "True":
+    if sorting_direction is True:
         sorted_list = sorted(list_of_dict, key=lambda x: x["date"], reverse=True)
     else:
         sorted_list = sorted(list_of_dict, key=lambda x: x["date"])
