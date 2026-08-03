@@ -7,6 +7,11 @@ R = TypeVar("R")
 
 
 def log(filename: str | None = None) -> Callable[[Callable[P, R]], Callable[P, R]]:
+    """Декоратор логирует информацию о выполнении функции.
+    Логирование включает: имя функции, время выполнения и результат при успешной операции,
+    и имя функции, тип возникшей ошибки и входные параметры, если выполнение функции привело к ошибке.
+    Информация выводится в консоль, или в файл, если он задан в аргументе filename."""
+
     def decorator(func: Callable[P, R]) -> Callable[P, R]:
         @wraps(func)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> Any:
