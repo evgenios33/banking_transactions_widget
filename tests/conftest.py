@@ -56,7 +56,6 @@ def list_of_dict_with_transactions() -> list[dict]:
 def fixed_time(monkeypatch: pytest.MonkeyPatch) -> None:
     def fake_time() -> float:
         return 0.123456
-
     monkeypatch.setattr("time.time", fake_time)
 
 
