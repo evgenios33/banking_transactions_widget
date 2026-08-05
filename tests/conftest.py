@@ -53,6 +53,13 @@ def list_of_dict_with_transactions() -> list[dict]:
 
 
 @pytest.fixture
+def fixed_time(monkeypatch: pytest.MonkeyPatch) -> None:
+    def fake_time() -> float:
+        return 0.123456
+    monkeypatch.setattr("time.time", fake_time)
+
+
+@pytest.fixture
 def list_of_dict_for_state() -> list[dict]:
     return [
         {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
