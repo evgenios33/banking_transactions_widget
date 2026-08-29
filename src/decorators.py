@@ -38,3 +38,13 @@ def log(filename: str | None = None) -> Callable[[Callable[P, R]], Callable[P, R
         return wrapper
 
     return decorator
+
+
+@log()
+def my_function(x: int | float, y: int | float) -> int | float:
+    """Функция для тестирования работы декоратора log."""
+    return x + y
+
+
+if __name__ == "__main__":
+    print(my_function(1, 2))
