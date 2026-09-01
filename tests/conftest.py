@@ -2,6 +2,11 @@ import pytest
 
 
 @pytest.fixture
+def list_categories_for_test() -> list[str]:
+    return ["Перевод организации", "Перевод с карты на карту", "Открытие вклада", "Перевод со счета на счет"]
+
+
+@pytest.fixture
 def list_of_dict_with_transactions() -> list[dict]:
     return [
         {
@@ -56,6 +61,7 @@ def list_of_dict_with_transactions() -> list[dict]:
 def fixed_time(monkeypatch: pytest.MonkeyPatch) -> None:
     def fake_time() -> float:
         return 0.123456
+
     monkeypatch.setattr("time.time", fake_time)
 
 

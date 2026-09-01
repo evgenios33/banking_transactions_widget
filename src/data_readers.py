@@ -19,11 +19,7 @@ def read_data_from_csv(file_path: str) -> list[dict]:
             data_list.append(row)
 
         return data_list
-
-
-if __name__ == "__main__":
-    result = read_data_from_csv("/Users/evgenios_33/PycharmProjects/banking_transactions_widget/data/transactions.csv")
-    print(result)
+        # return list(reader)
 
 
 def read_data_from_xlsx(file_path: str) -> list[dict]:
@@ -37,7 +33,3 @@ def read_data_from_xlsx(file_path: str) -> list[dict]:
     df = pd.read_excel(file_path)
     data_list = df.to_dict(orient="records")
     return data_list
-
-
-# if __name__ == '__main__':
-#     print(read_data_from_xlsx("/Users/evgenios_33/PycharmProjects/banking_transactions_widget/data/transactions_excel.xlsx"))

@@ -1,6 +1,6 @@
 import pytest
 
-from main import my_function
+from src.decorators import my_function
 
 
 def test_log(capsys: pytest.CaptureFixture[str], fixed_time: pytest.FixtureDef[float]) -> None:

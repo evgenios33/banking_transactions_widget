@@ -1,6 +1,61 @@
 import pytest
 
-from src.processing import filter_by_state, sort_by_date
+from src.processing import filter_by_state, process_bank_operations, process_bank_search, sort_by_date
+
+
+def test_process_bank_search(list_of_dict_with_transactions: list[dict]) -> None:
+    result = process_bank_search(list_of_dict_with_transactions, "с карты")
+    assert result == [
+        {
+            "id": 895315941,
+            "state": "EXECUTED",
+            "date": "2018-08-19T04:27:37.904916",
+            "operationAmount": {"amount": "56883.54", "currency": {"name": "USD", "code": "USD"}},
+            "description": "Перевод с карты на карту",
+            "from": "Visa Classic 6831982476737658",
+            "to": "Visa Platinum 8990922113665229",
+        }
+    ]
+
+
+def test_process_bank_search_empty(list_of_dict_with_transactions: list[dict]) -> None:
+    result = process_bank_search(list_of_dict_with_transactions, "")
+    assert result == []
+
+
+def test_process_bank_search_empty_data() -> None:
+    data = []  # type: ignore
+    result = process_bank_search(data, "с карты")
+    assert result == []
+
+
+def test_process_bank_operations(
+    list_of_dict_with_transactions: list[dict], list_categories_for_test: list[str]
+) -> None:
+    result = process_bank_operations(list_of_dict_with_transactions, list_categories_for_test)
+    assert result == {
+        "Перевод организации": 2,
+        "Перевод с карты на карту": 1,
+        "Открытие вклада": 0,
+        "Перевод со счета на счет": 2,
+    }
+
+
+def test_process_bank_operations_empty_data(list_categories_for_test: list[str]) -> None:
+    data = []  # type: ignore
+    result = process_bank_operations(data, list_categories_for_test)
+    assert result == {
+        "Перевод организации": 0,
+        "Перевод с карты на карту": 0,
+        "Открытие вклада": 0,
+        "Перевод со счета на счет": 0,
+    }
+
+
+def test_process_bank_operations_empty_categories(list_of_dict_with_transactions: list[dict]) -> None:
+    categories = []  # type: ignore
+    result = process_bank_operations(list_of_dict_with_transactions, categories)
+    assert result == {}
 
 
 @pytest.mark.parametrize("state_value", ["EXECUTED", "CANCELED", "ACTIVE", "INACTIVE", "PENDING"])

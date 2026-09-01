@@ -4,8 +4,11 @@ from typing import Generator, Iterator
 def filter_by_currency(transactions_data: list[dict], currency_code: str) -> Iterator[dict]:
     """Возвращает итератор, который поочередно выдает транзакции,
     где валюта операции соответствует заданной (например, USD)."""
+    currency_for_search = currency_code.upper().strip()
     for transaction in transactions_data:
-        if transaction.get("operationAmount", {}).get("currency", {}).get("code") == currency_code:
+        simple_data = transaction.get("currency_code", "")
+        nested_data = transaction.get("operationAmount", {}).get("currency", {}).get("code", "")
+        if simple_data == currency_for_search or nested_data == currency_for_search:
             yield transaction
 
 

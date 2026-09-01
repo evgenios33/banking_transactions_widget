@@ -1,18 +1,18 @@
 import json
 from unittest.mock import mock_open, patch
 
-from src.utils import convert_json_file
+from src.utils import read_data_from_json
 
 
 def test_empty_file() -> None:
     with patch("os.path.isfile", return_value=True), patch("os.path.getsize", return_value=0):
-        result = convert_json_file("dummy_path.json")
+        result = read_data_from_json("dummy_path.json")
         assert result == []
 
 
 def test_nonexistent_file() -> None:
     with patch("os.path.isfile", return_value=False):
-        result = convert_json_file("dummy_path.json")
+        result = read_data_from_json("dummy_path.json")
         assert result == []
 
 
@@ -23,7 +23,7 @@ def test_invalid_json() -> None:
         patch("os.path.isfile", return_value=True),
         patch("os.path.getsize", return_value=10),
     ):
-        result = convert_json_file("dummy_path.json")
+        result = read_data_from_json("dummy_path.json")
         assert result == []
 
 
@@ -36,5 +36,5 @@ def test_valid_list_of_dicts() -> None:
         patch("os.path.isfile", return_value=True),
         patch("os.path.getsize", return_value=50),
     ):
-        result = convert_json_file("dummy_path.json")
+        result = read_data_from_json("dummy_path.json")
         assert result == data
